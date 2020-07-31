@@ -43,7 +43,7 @@ extensions = [
 
 # autodoc/autosummary flags
 autoclass_content = "both"
-autodoc_default_options = {"members": True}
+autodoc_default_flags = ["members"]
 autosummary_generate = True
 
 
