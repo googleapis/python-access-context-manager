@@ -141,7 +141,7 @@ def system(session):
 
     # Install all test dependencies, then install this package into the
     # virtualenv's dist-packages.
-    session.install("mock", "pytest")
+    session.install("mock", "pytest", "asynctest")
 
     session.install("-e", ".")
 
