@@ -3,22 +3,22 @@
     {
       "git": {
         "name": ".",
-        "remote": "https://github.com/googleapis/python-access-context-manager.git",
-        "sha": "5c48f2d6f67dfeb3ca068f197de073b2944003d3"
+        "remote": "git@github.com:googleapis/python-access-context-manager",
+        "sha": "6f9de4ea0d52ab13d6493a54ff5970c778b8e651"
       }
     },
     {
       "git": {
         "name": "synthtool",
         "remote": "https://github.com/googleapis/synthtool.git",
-        "sha": "39b527a39f5cd56d4882b3874fc08eed4756cebe"
+        "sha": "d5fc0bcf9ea9789c5b0e3154a9e3b29e5cea6116"
       }
     },
     {
       "git": {
         "name": "synthtool",
         "remote": "https://github.com/googleapis/synthtool.git",
-        "sha": "39b527a39f5cd56d4882b3874fc08eed4756cebe"
+        "sha": "d5fc0bcf9ea9789c5b0e3154a9e3b29e5cea6116"
       }
     }
   ]
