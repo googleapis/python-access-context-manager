@@ -4,7 +4,7 @@
       "git": {
         "name": ".",
         "remote": "https://github.com/googleapis/python-access-context-manager.git",
-        "sha": "71a9ff63cec64284338e5e1b1d6c7161f109d7e4"
+        "sha": "5322c93a3a02567430e5dff33f05732e9a7249e2"
       }
     },
     {
