@@ -15,10 +15,13 @@
 import os
 import shutil
 
+import pathlib
 from pathlib import Path
 import nox
 
 BLACK_VERSION = "black==19.3b0"
+
+CURRENT_DIRECTORY = pathlib.Path(__file__).parent.absolute()
 
 
 @nox.session(python="3.8")
@@ -71,6 +74,14 @@ def default(session):
     )
     session.install("-e", ".")
 
+    constraints_path = str(
+        CURRENT_DIRECTORY / "testing" / f"constraints-{session.python}.txt"
+    )
+
+    # Install this package
+    # This *must* be the last install command to get the package from source.
+    session.install("e", "..", "-c", constraints_path)
+
     # Run py.test against the unit tests.
     session.run(
         "py.test",
@@ -119,6 +130,14 @@ def system(session):
     )
     session.install("-e", ".")
 
+    constraints_path = str(
+        CURRENT_DIRECTORY / "testing" / f"constraints-{session.python}.txt"
+    )
+
+    # Install this package
+    # This *must* be the last install command to get the package from source.
+    session.install("e", "..", "-c", constraints_path)
+
     # Run py.test against the system tests.
     if system_test_exists:
         session.run("py.test", "--quiet", system_test_path, *session.posargs)
@@ -159,6 +178,8 @@ def test(session, library):
 def generate_protos(session):
     """Generates the protos using protoc.
 
+    This session but be last to avoid overwriting the protos used in CI runs.
+
     Some notes on the `google` directory:
     1. The `_pb2.py` files are produced by protoc.
     2. The .proto files are non-functional but are left in the repository
@@ -166,10 +187,6 @@ def generate_protos(session):
     3. The `google` directory also has `__init__.py` files to create proper modules.
        If a new subdirectory is added, you will need to create more `__init__.py`
        files.
-
-    NOTE: This is a hack and only runnable locally. You will need to have
-    the api-common-protos repo cloned. This should be migrated to use
-    bazel in the future.
     """
     session.install("grpcio-tools")
     protos = [str(p) for p in (Path(".").glob("google/**/*.proto"))]
