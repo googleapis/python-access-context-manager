@@ -174,29 +174,30 @@ def test(session, library):
         system(session)
 
 
-@nox.session(python="3.8")
-def generate_protos(session):
-    """Generates the protos using protoc.
+# @nox.session(python="3.8")
+# def generate_protos(session):
+#     """Generates the protos using protoc.
+#
+#     THIS SESSION CAN ONLY BE RUN LOCALLY
+#     Clone `api-common-protos` in the parent directory
+#
+#     Some notes on the `google` directory:
+#     1. The `_pb2.py` files are produced by protoc.
+#     2. The .proto files are non-functional but are left in the repository
+#        to make it easier to understand diffs.
+#     3. The `google` directory also has `__init__.py` files to create proper modules.
+#        If a new subdirectory is added, you will need to create more `__init__.py`
+#        files.
+#     """
+#     session.install("grpcio-tools")
+#     protos = [str(p) for p in (Path(".").glob("google/**/*.proto"))]
 
-    This session but be last to avoid overwriting the protos used in CI runs.
-
-    Some notes on the `google` directory:
-    1. The `_pb2.py` files are produced by protoc.
-    2. The .proto files are non-functional but are left in the repository
-       to make it easier to understand diffs.
-    3. The `google` directory also has `__init__.py` files to create proper modules.
-       If a new subdirectory is added, you will need to create more `__init__.py`
-       files.
-    """
-    session.install("grpcio-tools")
-    protos = [str(p) for p in (Path(".").glob("google/**/*.proto"))]
-
-    session.run(
-        "python",
-        "-m",
-        "grpc_tools.protoc",
-        "--proto_path=../api-common-protos",
-        "--proto_path=.",
-        "--python_out=.",
-        *protos,
-    )
+#     session.run(
+#         "python",
+#         "-m",
+#         "grpc_tools.protoc",
+#         "--proto_path=../api-common-protos",
+#         "--proto_path=.",
+#         "--python_out=.",
+#         *protos,
+#     )
