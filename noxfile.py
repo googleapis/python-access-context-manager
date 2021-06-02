@@ -23,8 +23,9 @@ BLACK_VERSION = "black==19.3b0"
 
 CURRENT_DIRECTORY = pathlib.Path(__file__).parent.absolute()
 
+DEFAULT_PYTHON_VERSION = "3.8"
 
-@nox.session(python="3.8")
+@nox.session(python=DEFAULT_PYTHON_VERSION)
 def blacken(session):
     """Run black.
     Format code to uniform standard.
@@ -36,14 +37,14 @@ def blacken(session):
     session.run("black", "google", "setup.py")
 
 
-@nox.session(python="3.8")
+@nox.session(python=DEFAULT_PYTHON_VERSION)
 def lint_setup_py(session):
     """Verify that setup.py is valid"""
     session.install("docutils", "pygments")
     session.run("python", "setup.py", "check", "--strict")
 
 
-@nox.session(python="3.7")
+@nox.session(python=DEFAULT_PYTHON_VERSION)
 def docs(session):
     """Build the docs for this library."""
 
@@ -64,6 +65,39 @@ def docs(session):
         os.path.join("docs", "_build", "html", ""),
     )
 
+@nox.session(python=DEFAULT_PYTHON_VERSION)
+def docfx(session):
+    """Build the docfx yaml files for this library."""
+
+    session.install("-e", ".")
+    session.install(
+        "sphinx==4.0.1", "alabaster", "recommonmark", "gcp-sphinx-docfx-yaml"
+    )
+
+    shutil.rmtree(os.path.join("docs", "_build"), ignore_errors=True)
+    session.run(
+        "sphinx-build",
+        "-T",  # show full traceback on exception
+        "-N",  # no colors
+        "-D",
+        (
+            "extensions=sphinx.ext.autodoc,"
+            "sphinx.ext.autosummary,"
+            "docfx_yaml.extension,"
+            "sphinx.ext.intersphinx,"
+            "sphinx.ext.coverage,"
+            "sphinx.ext.napoleon,"
+            "sphinx.ext.todo,"
+            "sphinx.ext.viewcode,"
+            "recommonmark"
+        ),
+        "-b",
+        "html",
+        "-d",
+        os.path.join("docs", "_build", "doctrees", ""),
+        os.path.join("docs", ""),
+        os.path.join("docs", "_build", "html", ""),
+    )
 
 def default(session):
     # Install all test dependencies, then install this package in-place.
@@ -174,7 +208,7 @@ def test(session, library):
         system(session)
 
 
-@nox.session(python="3.8")
+@nox.session(python=DEFAULT_PYTHON_VERSION)
 def generate_protos(session):
     """Generates the protos using protoc.
 
