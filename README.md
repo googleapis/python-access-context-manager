@@ -20,7 +20,7 @@ policy defined on request attributes.
 .. _Product Documentation:  https://cloud.google.com/access-context-manager/docs
 
 Installation
-~~~~~~~~~~~~
+------------
 
 Install this library in a `virtualenv`_ using pip. `virtualenv`_ is a tool to
 create isolated Python environments. The basic problem it addresses is one of
@@ -34,7 +34,7 @@ dependencies.
 
 
 Mac/Linux
-^^^^^^^^^
+---------
 
 .. code-block:: console
 
@@ -45,7 +45,7 @@ Mac/Linux
 
 
 Windows
-^^^^^^^
+-------
 
 .. code-block:: console
 
@@ -55,7 +55,7 @@ Windows
     <your-env>\Scripts\pip.exe install google-cloud-access-context-manager
 
 Next Steps
-~~~~~~~~~~
+----------
 
 -  Read the `Client Library Documentation`_ for Access Context Manager
    to see other available methods on the client.
