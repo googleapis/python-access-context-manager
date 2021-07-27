@@ -3,7 +3,7 @@
 ### [0.1.6](https://www.github.com/googleapis/python-access-context-manager/compare/v0.1.5...v0.1.6) (2021-07-27)
 
 
-### Features
+### Documentation
 
 * add Samples section to CONTRIBUTING.rst ([#65](https://www.github.com/googleapis/python-access-context-manager/issues/65)) ([6091f99](https://www.github.com/googleapis/python-access-context-manager/commit/6091f999347e91f24842030bf1fb2e528cd4a6b5))
 
