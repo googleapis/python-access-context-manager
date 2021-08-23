@@ -195,3 +195,9 @@ s.replace(
     "master",
     "main"
 )
+
+s.replace(
+    ".kokoro/*",
+    "master",
+    "main"
+)
