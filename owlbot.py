@@ -183,3 +183,15 @@ s.replace(
     PB2_GRPC_HEADER,
     fr"{LICENSE}\n\n\g<1>\n\n\g<2>",  # add line breaks to avoid stacking replacements
 )
+
+s.replace(
+    "CONTRIBUTING.rst",
+    "master",
+    "main"
+)
+
+s.replace(
+    "docs/conf.py",
+    "master",
+    "main"
+)
