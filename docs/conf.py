@@ -77,7 +77,7 @@ source_suffix = [".rst", ".md"]
 # source_encoding = 'utf-8-sig'
 
 # The main toctree document.
-main_doc = "index"
+root_doc = "index"
 
 # General information about the project.
 project = "google-cloud-access-context-manager"
@@ -280,7 +280,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (
-        main_doc,
+        root_doc,
         "google-cloud-access-context-manager.tex",
         "google-cloud-access-context-manager Documentation",
         author,
@@ -315,7 +315,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     (
-        main_doc,
+        root_doc,
         "google-cloud-access-context-manager",
         "google-cloud-access-context-manager Documentation",
         [author],
@@ -334,7 +334,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (
-        main_doc,
+        root_doc,
         "google-cloud-access-context-manager",
         "google-cloud-access-context-manager Documentation",
         author,
