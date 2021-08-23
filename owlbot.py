@@ -191,9 +191,21 @@ s.replace(
 )
 
 s.replace(
+    "CONTRIBUTING.rst",
+    "https://github.com/kubernetes/community/blob/main/",
+    "https://github.com/kubernetes/community/blob/master/"
+)
+
+s.replace(
     "docs/conf.py",
     "master",
     "main"
+)
+
+s.replace(
+    "docs/conf.py",
+    "main_doc",
+    "root_doc"
 )
 
 s.replace(
