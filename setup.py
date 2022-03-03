@@ -30,7 +30,7 @@ release_status = "Development Status :: 4 - Beta"
 dependencies = [
     "google-api-core[grpc] >= 1.31.5, <3.0.0dev,!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.0",
     "protobuf >= 3.12.0",
-    ]
+]
 
 # Setup boilerplate below this line.
 
