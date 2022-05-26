@@ -21,7 +21,7 @@ import setuptools
 
 name = "google-cloud-access-context-manager"
 description = "Google Cloud Access Context Manager Protobufs"
-version = "0.1.10"
+version = "0.1.11"
 # Should be one of:
 # 'Development Status :: 3 - Alpha'
 # 'Development Status :: 4 - Beta'
@@ -29,7 +29,7 @@ version = "0.1.10"
 release_status = "Development Status :: 4 - Beta"
 dependencies = [
     "google-api-core[grpc] >= 1.31.5, <3.0.0dev,!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.0",
-    "protobuf >= 3.12.0",
+    "protobuf >= 3.12.0, <4.0.0dev",
 ]
 
 # Setup boilerplate below this line.
