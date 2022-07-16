@@ -211,7 +211,7 @@ def install_systemtest_dependencies(session, *constraints):
         session.install("-e", ".", *constraints)
 
 
-@nox.session(python=["3.6", "3.7", "3.8", "3.9"])
+@nox.session(python=["3.7", "3.8", "3.9"])
 @nox.parametrize(
     "library",
     ["python-asset"],
