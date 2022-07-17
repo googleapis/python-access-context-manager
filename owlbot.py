@@ -51,7 +51,7 @@ common = gcp.CommonTemplates()
 templated_files = common.py_library(microgenerator=True)
 
 s.move(
-    templated_files, excludes=[".coveragerc", ".gitignore", ".github/workflows", "noxfile.py"],
+    templated_files, excludes=[".coveragerc", ".gitignore", ".github/workflows", "noxfile.py", "README.rst"],
 )
 
 python.py_samples(skip_readmes=True)
