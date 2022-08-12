@@ -33,7 +33,6 @@ dependencies = [
 ]
 
 # Setup boilerplate below this line.
-
 package_root = os.path.abspath(os.path.dirname(__file__))
 
 readme_filename = os.path.join(package_root, "README.md")
