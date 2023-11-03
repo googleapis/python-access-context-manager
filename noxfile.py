@@ -234,7 +234,7 @@ def test(session, library):
     """
     package = ""
     if type(library) == tuple:
-            library, package = library
+        library, package = library
     try:
         session.run("git", "-C", library, "pull", external=True)
     except nox.command.CommandFailed:
@@ -248,7 +248,7 @@ def test(session, library):
 
     session.cd(library)
     if package:
-        session.cd(f'packages/{package}')
+        session.cd(f"packages/{package}")
     unit(session)
     # system tests are run 3.7 only
     if session.python == "3.7":
