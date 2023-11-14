@@ -36,13 +36,13 @@ def test_namespace_package_compat(tmp_path):
     cmd = [sys.executable, "-m", "google.identity.othermod"]
     subprocess.check_call(cmd, env=env)
 
-
     # The ``google.identity.accesscontextmanager`` namespace package should not be masked
     # by the presence of ``google-cloud-access-context-manager``.
-    google_identity_accesscontextmanager = tmp_path / "google" / "identity" / "accesscontextmanager"
+    google_identity_accesscontextmanager = (
+        tmp_path / "google" / "identity" / "accesscontextmanager"
+    )
     google_identity_accesscontextmanager.mkdir()
     google_identity_accesscontextmanager.joinpath("othermod.py").write_text("")
     env = dict(os.environ, PYTHONPATH=str(tmp_path))
     cmd = [sys.executable, "-m", "google.identity.accesscontextmanager.othermod"]
     subprocess.check_call(cmd, env=env)
-
