@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.2.0](https://github.com/googleapis/python-access-context-manager/compare/v0.1.16...v0.2.0) (2023-12-13)
+## [0.2.0rc1](https://github.com/googleapis/python-access-context-manager/compare/v0.1.16...v0.2.0rc1) (2023-12-13)
 
 
 ### Features
