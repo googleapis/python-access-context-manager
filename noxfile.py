@@ -380,6 +380,7 @@ def docfx(session):
         os.path.join("docs", "_build", "html", ""),
     )
 
+
 @nox.session(python=UNIT_TEST_PYTHON_VERSIONS)
 def unit(session):
     """Run the unit test suite."""
