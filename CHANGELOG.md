@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.0](https://github.com/googleapis/python-access-context-manager/compare/v0.1.16...v0.2.0) (2023-12-13)
+
+
+### Features
+
+* Add support for Python 3.12 ([#188](https://github.com/googleapis/python-access-context-manager/issues/188)) ([c379c57](https://github.com/googleapis/python-access-context-manager/commit/c379c573573207ef6e6f355aa569e19149ef2824))
+* Introduce compatibility with native namespace packages ([#187](https://github.com/googleapis/python-access-context-manager/issues/187)) ([8ffdcd3](https://github.com/googleapis/python-access-context-manager/commit/8ffdcd31ecc4a4b8e18b8534257ff02c391339f7))
+
 ## [0.1.16](https://github.com/googleapis/python-access-context-manager/compare/v0.1.15...v0.1.16) (2023-02-27)
 
 
