@@ -34,12 +34,23 @@ subprocess.run(["git", "clone", googleapis_url])
 # This is required in order for s.copy() to work
 s._tracked_paths.add("googleapis")
 
+# Create folders for dependencies of the protos that we want to compile
 os.makedirs("google/api", exist_ok=True)
+os.makedirs("google/iam/v1", exist_ok=True)
+os.makedirs("google/longrunning", exist_ok=True)
+os.makedirs("google/rpc", exist_ok=True)
 os.makedirs("google/type", exist_ok=True)
 
-s.copy("googleapis/google/api/annotations.proto", "google/api")
-s.copy("googleapis/google/api/http.proto", "google/api")
-s.copy("googleapis/google/type/expr.proto", "google/type")
+# Copy dependencies of the protos that we want to compile from googleapis
+s.copy("googleapis/google/api/*.proto", "google/api")
+s.copy("googleapis/google/iam/v1/*.proto", "google/iam/v1")
+s.copy("googleapis/google/longrunning/*.proto", "google/longrunning")
+s.copy("googleapis/google/rpc/*.proto", "google/rpc")
+s.copy("googleapis/google/type/*.proto", "google/type")
+
+# Copy the protos that we want to compile from googleapis
+s.copy("googleapis/google/identity/accesscontextmanager/v1/*.proto", "google/identity/accesscontextmanager/v1")
+s.copy("googleapis/google/identity/accesscontextmanager/type/*.proto", "google/identity/accesscontextmanager/type")
 
 # Clean up googleapis
 shutil.rmtree("googleapis")
@@ -66,8 +77,12 @@ python.py_samples(skip_readmes=True)
 # Generate _pb2.py files and format them
 s.shell.run(["nox", "-s", "generate_protos"])
 
-# Clean up
+# Clean up the folders for dependencies which are shipped via `googleapis-common-protos`
+# We should not ship them via this repository
 shutil.rmtree("google/api")
+shutil.rmtree("google/iam/v1")
+shutil.rmtree("google/longrunning")
+shutil.rmtree("google/rpc")
 shutil.rmtree("google/type")
 
 s.shell.run(["nox", "-s", "blacken"], hide_output=False)
