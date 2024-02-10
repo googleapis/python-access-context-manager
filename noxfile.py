@@ -68,7 +68,7 @@ CURRENT_DIRECTORY = pathlib.Path(__file__).parent.absolute()
 nox.options.sessions = [
     "system",
     "lint",
-    "test",
+    "integration_test",
     "lint_setup_py",
     "blacken",
     "docs",
@@ -184,11 +184,6 @@ def default(session):
     )
 
 
-def unit(session):
-    """Run the unit test suite."""
-    default(session)
-
-
 def install_systemtest_dependencies(session, *constraints):
 
     # Use pre-release gRPC for system tests.
@@ -226,7 +221,7 @@ def install_systemtest_dependencies(session, *constraints):
     ],
     ids=["asset"],
 )
-def test(session, library):
+def integration_test(session, library):
     """Run tests from a downstream libraries.
     To verify that any changes we make here will not break downstream libraries, clone
     a few and run their unit and system tests.
@@ -250,7 +245,7 @@ def test(session, library):
     session.cd(library)
     if package:
         session.cd(f"packages/{package}")
-    unit(session)
+    default(session)
     # system tests are run 3.7 only
     if session.python == "3.7":
         system(session)
@@ -407,20 +402,4 @@ def docfx(session):
 @nox.session(python=UNIT_TEST_PYTHON_VERSIONS)
 def unit(session):
     """Run the unit test suite."""
-    # Install all test dependencies, then install this package in-place.
-    session.install("mock", "pytest", "pytest-cov")
-    session.install("-e", ".")
-
-    # Run py.test against the unit tests.
-    session.run(
-        "py.test",
-        "--quiet",
-        "--cov=google.cloud",
-        "--cov=tests.unit",
-        "--cov-append",
-        "--cov-config=.coveragerc",
-        "--cov-report=",
-        "--cov-fail-under=0",
-        os.path.join("tests", "unit"),
-        *session.posargs,
-    )
+    default(session)
