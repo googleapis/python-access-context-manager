@@ -80,4 +80,7 @@ RUN wget -O /tmp/get-pip.py 'https://bootstrap.pypa.io/get-pip.py' \
 # Test pip
 RUN python3 -m pip
 
+COPY requirements.txt /requirements.txt
+RUN python3 -m pip install --require-hashes -r requirements.txt
+
 CMD ["python3.8"]
