@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/googleapis/python-access-context-manager/compare/v0.2.0...v0.2.1) (2024-04-07)
+
+
+### Documentation
+
+* Fix docs session ([#211](https://github.com/googleapis/python-access-context-manager/issues/211)) ([e4bb6eb](https://github.com/googleapis/python-access-context-manager/commit/e4bb6eb1789eeb06f7a26f437861cd58deebe85d))
+
 ## [0.2.0](https://github.com/googleapis/python-access-context-manager/compare/v0.1.16...v0.2.0) (2024-02-15)
 
 
