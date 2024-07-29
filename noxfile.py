@@ -92,7 +92,7 @@ def unit(session, repository, package, prerelease, protobuf_implementation):
         session.install("protobuf<4")
 
     # Install this library from source
-    session.install(".", "--no-deps")
+    session.install(CURRENT_DIRECTORY, "--no-deps")
 
     # Print out package versions of dependencies
     session.run(
