@@ -19,6 +19,7 @@ import pathlib
 from pathlib import Path
 import re
 import shutil
+import tempfile
 
 import nox
 
@@ -181,32 +182,92 @@ def unit_remote(session, library, prerelease, protobuf_implementation):
     NOTE: The unit and system test functions above are copied from the templates.
     They will need to be updated when the templates change.
 
-    * Pub/Sub: GAPIC with handwritten layer.
-    * Speech: Full GAPIC, has long running operations.
+    * Asset: GAPIC which uses `google-cloud-access-context-manager`
     """
 
     if protobuf_implementation == "cpp" and session.python in ("3.11", "3.12"):
         session.skip("cpp implementation is not supported in python 3.11+")
 
     repository, package = library
-    try:
-        session.run("git", "-C", repository, "pull", external=True)
-    except nox.command.CommandFailed:
+    with tempfile.TemporaryDirectory() as working_dir:
         session.run(
             "git",
             "clone",
             "--single-branch",
             f"https://github.com/googleapis/{repository}",
+            f"{working_dir}/{repository}",
             external=True,
         )
 
-    unit(
-        session=session,
-        repository=repository,
-        package=package,
-        prerelease=prerelease,
-        protobuf_implementation=protobuf_implementation,
-    )
+        downstream_dir = repository
+        if package:
+            downstream_dir = f"{working_dir}/{repository}/packages/{package}"
+
+        # Install all test dependencies, then install this package in-place.
+        session.install("asyncmock", "pytest-asyncio")
+
+        session.install("mock", "pytest", "pytest-cov")
+
+        install_command = ["-e", downstream_dir]
+
+        if prerelease:
+            install_prerelease_dependencies(
+                session,
+                f"{downstream_dir}/testing/constraints-{UNIT_TEST_PYTHON_VERSIONS[0]}.txt",
+            )
+            # Use the `--no-deps` options to allow pre-release versions of dependencies to be installed
+            install_command.extend(["--no-deps"])
+        else:
+            # Install the pinned dependencies in constraints file
+            install_command.extend(
+                [
+                    "-c",
+                    f"{downstream_dir}/testing/constraints-{session.python}.txt",
+                ]
+            )
+
+        # These *must* be the last 3 install commands to get the packages from source.
+        session.install(*install_command)
+
+        # Remove the 'cpp' implementation once support for Protobuf 3.x is dropped.
+        # The 'cpp' implementation requires Protobuf<4.
+        if protobuf_implementation == "cpp":
+            session.install("protobuf<4")
+
+        # Install this library from source
+        session.install(CURRENT_DIRECTORY, "--no-deps")
+
+        # Print out package versions of dependencies
+        session.run(
+            "python", "-c", "import google.protobuf; print(google.protobuf.__version__)"
+        )
+        session.run("python", "-c", "import grpc; print(grpc.__version__)")
+        session.run(
+            "python", "-c", "import google.auth; print(google.auth.__version__)"
+        )
+
+        session.run(
+            "python", "-c", "import google.api_core; print(google.api_core.__version__)"
+        )
+
+        # Run py.test against the unit tests in the downstream repository
+        with session.chdir(downstream_dir):
+            # Run py.test against the unit tests.
+            session.run(
+                "py.test",
+                "--quiet",
+                "--cov=google/cloud",
+                "--cov=tests/unit",
+                "--cov-append",
+                "--cov-config=.coveragerc",
+                "--cov-report=",
+                "--cov-fail-under=0",
+                os.path.join("tests", "unit"),
+                *session.posargs,
+                env={
+                    "PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION": protobuf_implementation,
+                },
+            )
 
 
 @nox.session(python=UNIT_TEST_PYTHON_VERSIONS)
